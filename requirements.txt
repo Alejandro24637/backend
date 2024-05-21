@@ -9,11 +9,4 @@ pydantic==2.6.1
 pydantic-extra-types==2.5.0
 pydantic-settings==2.2.0
 pydantic_core==2.16.2
-annotated-types==0.6.0
-conda==23.1.0
-cryptography 
-fastjsonschema
-httpcore==1.0.3
-httptools==0.6.1
-httpx==0.26.0
-python==3.10.9
+
