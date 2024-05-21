@@ -21,7 +21,7 @@ class UserDB(User):
 
 # aqui guardaremos el token una vez autenticados 
 
-oauth2 = OAuth2PasswordBearer(tokenUrl="login")
+oauth2 = OAuth2PasswordBearer(tokenUrl="loginn")
 
 
 # nuestra base de datos de usuarios
@@ -73,7 +73,7 @@ async def current_user(token: str = Depends(oauth2)):
 
 # Login con post, ya que vamos a mandar datos
 
-@router.post("/login")
+@router.post("/loginn")
 async def login(form : OAuth2PasswordRequestForm = Depends()):
     
     # comprobamos en nombre de usuario si esta dentro de la base de datos
@@ -92,6 +92,6 @@ async def login(form : OAuth2PasswordRequestForm = Depends()):
 
 # Vamos a pedir nuestros datos
 
-@router.get("/user/me")
+@router.get("/user/mee")
 async def me(user : User = Depends(current_user)):
     return user
