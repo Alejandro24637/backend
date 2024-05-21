@@ -1,0 +1,45 @@
+NOTA:
+esto es solo algunos conceptos que me gustaria guardar y tener presentes ya que son importantes a la hora del backend
+aun asi siempre puedo consultar la documentacion oficial de FastApi donde estan varios de estos conceptos
+
+documentacion de FastApi:  https://fastapi.tiangolo.com/es/
+
+
+--- QUE ES FRONTEND ? ---
+
+El frontend es la parte visual de una pagina web o app, es la interfaz grafica con la que interactuamos
+
+
+---QUE ES BACKEND ? ---
+
+El backend es la parte logica de la pagina web o app, es la que se encarga de hacer operaciones y donde se procesa la infomacion que 
+recibe del frontend, es la parte del servidor y es la que le da los datos al parte del frontend
+
+Esto es lo que vamos a aprender este año, en le backend esta la BASE DE DATOS, SERVIDOR, AUTENTICACION y otras cosas
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+--- QUE ES UN FRAMEWORK ? ---
+
+Es basicamente un es un 'marco de trabajo', es un conjunto de herramientas y librerias que nos permiten desarrollar de una manera mas 
+rapida y facil
+
+
+--- QUE ES UNA API ? ---
+
+Sus siglas significan 'Interfaz de Programacion para Aplicaciones', lo que hace es comunicar el cliente ( el que pide peticiones al 
+servidor) con el servidor (el que recibe las peticiones del cliente y le devuelve las respuestas), un ejem es un centro meteorologico (
+servidor) que tiene una app (cliente), cuando en el centro se hacen las pruebas meteorologicas y se da informacion meteorologica esta 
+es enviada a la app 
+
+--- QUE ES FASTAPI ? ---
+
+En resumidas cuentas, es un framework de python para hacer Apis y trabajar con backend, es mas veloz que otros frameworks y tiene 
+mejores funciones, eso es en resumidas cuentas FASTAPI
+
+--- QUE ES UN JSON ? ---
+
+Sus siglas significan (JavaScript Object Notation), y es un formato que sirve para la transferencia de datos de un servidor web a una 
+app web y viceversa
+
+ejm de su sintaxix (son como los diccionarios con clave y valor) : {'type' : 'string'}

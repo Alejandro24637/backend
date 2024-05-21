@@ -1,0 +1,15 @@
+despliegue en delta
+
+en primer lugar si queremos que neustra api ya no solo se le pueda hacer peticiones en local sino que todo el mundo pueda, tenemos que cambiar desde donde se hacen las peticiones en la base de datos ( mongodb atlas), con pone = 0.0.0.0/0 , es mas que suficiente pq ahi le indicamos que cualquiera se puede conectar ( se agrega una ip en la parte de network acess o aceso de red en la pagian de mongo db atlas) 
+
+ahora tenemos que ejecutar todo nuestro proyecto en un servidor externo, para qu cuando se este ejecutando ya no este en nuestro localhost sino en un servidor
+
+vamos a usar deta
+
+para ello primero creamos un archivo requirements.txt donde estara todos los modulos que usamos para llevar a cabo nuestro proyecto
+
+actualizacion: deta ya no sivre para lanzar apps web
+ahora tengo que aprender 
+- crear un entorno virtual para meter mi proyecto
+- enviar un proyecto a github
+- usar railway para desplegar mi proyecto

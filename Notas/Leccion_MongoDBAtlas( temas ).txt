@@ -1,0 +1,18 @@
+en esta clase aprendemos como pasar nuestra base de datos de local a remoto con mongo atlas
+
+aparte para local se hace una pequeña mejora, que en el
+
+db_client = MongoClient().local ( agregan ese local )
+
+y cuando hagamos peticiones sea
+
+db_client.users.find() por ejem
+
+ahora que hacemos aqui, nos vamos para la pgina de mongodb nos registramos y solo seguimos las indicaciones que nos dicen
+
+en nuestro codigo vamos a nuestro client.py y hacemos una conexion  con nuestro db remoto con el link que nos da mongo atlas y nos conectamos
+
+seria 
+db_client = MongoClient("url con la que nos conectamos")."nombre de bd "
+
+y para conectarnos con nuestra extension en VS code, seguimos las indicaciones que nos da la pagina

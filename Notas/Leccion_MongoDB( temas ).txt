@@ -1,0 +1,41 @@
+MONGODB 
+
+mongo es una base de datos no relacional, en esta leccion vimos como descargar y iniciarla
+
+para iniciar la base de datos local lo que tenemos que hacer es abrir el cdm y poner "mongod" y luego enter y automáticamente se iniciara 
+
+luego cuando hacemos nuestra api de users con base de datos tenemos que crear unas cosas
+
+1. hacer una carpeta donde tengamos nuestro cliente de base datos
+
+from pymongo import MongoClient
+
+db_client = MongoClient()
+
+luego dentro de esas carpetas haremos dos mas, una que tenga nuestro modelo de usuario y otra para los esquemas que vamos usar
+
+explicacion de los esquemas : las bd no relacionales guardan info como documentos, asi que cuando le mandamos datos a nuestra bd se lo mandamos como un dict, y luego cuando la sacamos la volvemos a convertir en json o en la clase que la convirtamos
+
+en la carpeta modelos dentro de el script user sera
+
+from pydantic import BaseModel
+from typing import Optional
+
+class User(BaseModel):
+	id : Optiona[str] = None
+	name : str
+	email : str
+
+y para la carpeta de esquemas
+
+def user_schemas(user) -> dict:
+	return {"id":user["_id"]`,
+		"name":user["name"],
+		"email":user["email"]}
+
+def users_schemas(users) -> list:
+	return [ user_schemas(user) for user in users]
+
+luego importaremos estas funciones, el cliente y la clase a nustra api principal
+
+y lo demas queda ya en codigo y se entiende solo queria explicar esto, ya que lo demas es un CRUD pero con la diferenxia que hacemos las solicitudes con el db_client, como find o find_one entre otros y para hacer eso usamos db_client.local.users."funcion que vayas a usar

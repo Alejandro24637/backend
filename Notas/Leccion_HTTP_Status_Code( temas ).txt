@@ -1,0 +1,26 @@
+Status Code HTTP
+
+cada codigo http tiene un significado, ejem el 200 significa que todo fue bien y el 500 que el servidor se ha caido (por decirlo asi)
+
+los codigos mas comunes de http son:
+
+200 = todo correcto
+201 = ha sido creado
+204 = no hay contenido
+300 = redireccion
+304 = no ha sido modificado
+400 = error del cliente
+404 = no encontrado
+500 = error del server
+
+para poder invocar excepciones HTTP tenemos que importar desde fastapi el HTTPException
+
+'from fastapi import FastApi, HTTPException'
+
+para enviar un codigo por defecto lo colocamos en la func decoradora
+
+'@app.post("/user/", status_code = 201)'
+
+y para poner lo que tiene que responder la func si funciona correctamente usamos
+
+'@app.post("/user/",response_mode= User, status_code = 201)'

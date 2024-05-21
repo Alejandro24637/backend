@@ -1,0 +1,11 @@
+apuntes de los temas
+
+http protocolos y peticiones (get )
+funciones asincronas
+servidor local uvicorn ( uvicorn main:app--reload)
+localhost
+JSON archivo
+/docs , documentacion automatica con
+Swagger
+/redoc . documentacion automatica con Redoc
+control + c detener el servidor

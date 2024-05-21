@@ -1,0 +1,11 @@
+la seguridad JWT es algo mejor quenla basica pq esta encriptada, JWT significa Json web token
+
+ok ahora en esta leccion descargamos dos paquetes descargamos jose que trae el JWT y un passlib que sera el que lea los encriptados en bcript que con eso encriptaremos nuestra contraseña de usuario mientras que con JWT manejaremos nuestro token que nos dan cuando nos autenticamos 
+
+la verdad en esta leccion no pondre codigo ya que en la misma api se entiende todo
+
+solo queria decir lo aprendido
+
+mejoramos la parte de la encriptacion con el passlib ademas que agregamos un token con tiempo de caducidad con el modulo datetime para que le token solo dure cierto tiempo
+
+lo ultimo que nos falta ahora es aprender a usar bases de datos y ya tendriamos el conocimiento suficiente para hacer mis propias apis yo solito

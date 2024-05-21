@@ -1,0 +1,173 @@
+Autorizacion OAuth2
+
+nota= cada ve hago mas detalladas las notas para poder luego repasar mejor :D
+
+ya este es el apartado de seguridad de nuestra 
+api, aqui entran dos conceptos : autenticacion y 
+autorizacion, y son dos coceptos distintos
+
++Autenticacion : identificarse por decirlo asi, comprobar 
+si estamos registrados en una pagina por ejemplo
+
++Autorizacion : una vez autenticado tenemos la capacidad 
+de ciertas acciones pq hasta ahi tenemos autorizados, pero
+por ejem no tenemos autorizado ver ciertos registros, que
+solo los admin tienen autorizado
+
+ya con esto claro vamos a como vamos aplicarle esta 
+seguridad a nuestro API, con el estandar OAuth2 con una 
+seguridad basica de usuario y contraseña
+
+creamos una nueva api para crear una autenticacion basica de usuario contraseña
+todo igual, solo que se modifica la clase User() y se crea las clase UserDB() para colocar la password
+
+se crea una "base de datos" tipo json o diccionario, y creamos una funcion search que cuando encuentra el username en la base de datos convierte ese usuario en UserDB()
+
+esto seria lo que se hace(explicando sin escribir codigo) para la parte de los usuarios
+
+ahora la parte de autenticacion
+-------------------------------------------------------------------------------------
+"from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm"
+-------------------------------------------------------------------------------------
+passwordbear es la parte que hara el proceso de autenticacion, va a hacer el que nos permita esto
+
+mientras requestform va hacer la parte de como envian los criterios para autenticarnos desde el frontend hacia nuestro backend
+
+osea passwordbearer proceso mientras requestform es la forma en la que se envian los datos a autenticar 
+
+instancia de nuestro Auth2
+-------------------------------------------------------------------------------------
+oauth2 = OAuth2PasswordBearer(tokenUrl="login")
+-------------------------------------------------------------------------------------
+para autenticarnos tendriamos que ingresar en /login para eso es el tokenUrl
+
+operacion de autenticacion
+
+para enviar los datos de nuestro usuario y contraseña usaremos un post, y usamos nuestro
+tokenUrl que maneja nuestra auntenticacion
+-------------------------------------------------------------------------------------
+"importar depends recuerda y HTTPException"
+from fastapi import FastAPI,Depends,HTTPException
+
+
+@app.post("/login")
+async def login(form : OAuth2PasswordRequestForm = Depends()):
+-------------------------------------------------------------------------------------
+"form" va a tener nuestros cirterios de usuario y contraseña mientras que "Depends" indica que la parte de autenticacion no depeden de nadie,
+el "Depends" como su nombre indica es para crear dependencias, y ya esto queda de mi parte si no me equivoco la autorizacion va a depender de la autenticacion, solo para aclarar esto ya son notas mias apartes, despues vere si es verdad o no 
+-------------------------------------------------------------------------------------
+@app.post("/login")
+async def login(form : OAuth2PasswordRequestForm = Depends()):
+	user_db = users_db.get(form.username)
+	if not user_db:
+		raise HTTPException(status_code=400,detail"el usuario es incorrecto")
+-------------------------------------------------------------------------------------
+esta parte estamps viendo si el usuario se encuentra en la base de datos y si no lanzamos una excepcion
+-------------------------------------------------------------------------------------
+@app.post("/login")
+async def login(form : OAuth2PasswordRequestForm = Depends()):
+	user_db = users_db.get(form.username)
+	if not user_db:
+		raise HTTPException(status_code=400,detail"el usuario es incorrecto")
+	
+	user = search_user(form.username)
+	if not form.password == user.password:
+		raise HTTPException(status_code=400,detail"la contraseña es incorrecto")
+-------------------------------------------------------------------------------------
+ahora si el usuario si esta ne la base de datos luego comprobamos la contraseña y para eso creamos ahora si un user de tipo UserDB(), y vemos si las contraseñas son iguales, sino lanzamos una excepcion
+-------------------------------------------------------------------------------------
+@app.post("/login")
+async def login(form : OAuth2PasswordRequestForm = Depends()):
+	user_db = users_db.get(form.username)
+	if not user_db:
+		raise HTTPException(status_code=400,detail="el usuario es incorrecto")
+	
+	user = search_user(form.username)
+	if not form.password == user.password:
+		raise HTTPException(status_code=400,detail="la contraseña es incorrecto")
+	
+	return {"access_token": user.username, "token_type": "bearer"}
+-------------------------------------------------------------------------------------
+si todo sale bien por estandar si va a devolver un acess token que lo que hara es que no nos pida todo le tiempo para autenticarnos el user y password, sino que una vez ya autenticados bien solo usamos nuestro access token, y luego el tipo de token sera bearer por estandar, normalmente todo esto esta encriptado y tiene varias cosas de seguridad y etc , ya luego se aplicara
+
+
+ahora para obtener datos luego de haber sido autenticado
+
+nota= hay pedazoz de codigos o cosas que ya mas adelante en el vuideo se corrijen y yo al final de las notas voy a poner todas las correciones y el pq de cada una 
+-------------------------------------------------------------------------------------
+@app.get("/user/me")
+async def me(user : User = Depends(current_user)):
+	return user
+-------------------------------------------------------------------------------------
+aqui vamos a retornar user y esto va a depender de que nos hayamos autenticado, para ello nuestro criterio de dependencia sera tengamos una forma de comprobar si estamos autenticados
+
+para ello creamos la funcion current_user, que hara esa comprobacion y tambien comprobara si el usuario esta desactivado o no, vamos a validar si nuestro token esta correcto
+
+--esto va arriba de las funciones get y post ojo
+-------------------------------------------------------------------------------------
+async def current_user(token : str = Depends(oauth2)):
+-------------------------------------------------------------------------------------
+nuestro token va a depender de nuestra instancia de autenticacion
+
+aqui moure importa "status" que es para ver de manera mas visual los codigos http
+-------------------------------------------------------------------------------------
+from fastapi import FastAPI,Depends,HTTPException,status
+-------------------------------------------------------------------------------------
+
+ahora vamos con la funcion
+headers = son las cabeceras, moure explica que es para dar mas informacion y que usa el estandar de WWW-Authenticate
+-------------------------------------------------------------------------------------
+async def current_user(token : str = Depends(oauth2)):
+	user = search_user(token)
+	if not user:
+		raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+				    detail="Credenciales de autenticacion invalidas",
+				    headers={"WWW-Authenticate":"Bearer"})
+		return user
+-------------------------------------------------------------------------------------
+voy a agregar las funcion search_user()
+
+-------------------------------------------------------------------------------------
+def search_user(username : str):
+	if username in users_db:
+		return UserDB(**users_db[username])
+-------------------------------------------------------------------------------------
+
+
+ahora vamos con las correciones ya que mientras moure prube acodigo algunas cosas les da fallo
+
+1. el **, lo usa en la parte de search_user en : return UserDB(**users_db[username]) 
+es para que se cree la clase con los parametros que hemos definido de manera predeterminada
+y no se cree con otros parametros aparte ya que BaseModel tiene otros parametros mas
+
+2. todos los httpexception les pone el status en status_code=
+
+3. agrega para comprobar si nuestro usuario esta activo o no en current_user
+
+async def current_user(token : str = Depends(oauth2)):
+	user = search_user(token)
+	if not user:
+		raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+				    detail="Credenciales de autenticacion invalidas",
+				    headers={"WWW-Authenticate":"Bearer"})
+	if user.disabled:
+		raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+				    detail="Usuario inactivo")
+		return user
+
+
+4. tenemos que crear en vez de un UserDB un User, para cuando pidamos informacion de 
+nosotros ya autenticados no nos devuelva la contraseña
+
+lo que hacemos es crear dos search_user, uno con un UserDB que sera search_user_db, y lo agregamos a nuestro post
+y otra que sea el mismo search_user pero que sea un User lo que devuelva
+
+def search_user_db(username : str):
+	if username in users_db:
+		return UserDB(**users_db[username])
+
+def search_user(username : str):
+	if username in users_db:
+		return User(**users_db[username])
+
+me gustan las notas asi siento que aprendo mas :D, tal vez luego actualize las otras notas con mas informacion

@@ -1,0 +1,26 @@
+apuntes de la leccion Path y Query
+
+
+Parametros Path
+estos van en el path del codigo y luego se lo
+pasamos a la funcion
+
+ejem
+@app.get("/user/{parametro}")
+async def funcion(parametro : tipo):
+     return parametro
+
+Parametro Query
+estos se hacen a la hora de hacer la peticion
+http
+
+ejem
+@app.get("/user/")
+async def funcion(parametro : tipo):
+     return parametro
+
+http://1.200.132/user/parametro=valor_queledamos
+
+si queremos concatenar mas parametros usamos el &
+
+http://1.200.132/user/parametro=valor_queledamos&parametro2=valor

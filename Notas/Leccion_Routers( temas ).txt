@@ -1,0 +1,52 @@
+Router
+
+basicamente es enrutar las apis en un solo lugar, entonces tenemos el api general y las otras apis que tambien forman parte de la general, entonces ya no pueden ser entidades api sino routers
+
+un router es
+
+"Básicamente consiste en mover paquetes —en el buen sentido de la palabra— o mover información a nivel de una red de Internet desde una red a otra.
+
+Por ejemplo, queremos mover un paquete desde mi casa a otro ordenador en alguna parte de Barcelona, a esto es lo que llamamos Routing."
+
+pondremos nuestros routers en una carpeta llamada 'routers' y luego para convertir un api en router solo tenemos que
+
+'from fastapi import APIRouter'
+
+y ahora sera
+
+'app = APIRouter()'
+
+y le pondremos a app el nombre de router(solo pq tiene mas sentio)
+
+'router = APIRouter()'
+
+luego para importarlo dentro de main.py  solo importamos su modulo ( es decir la carpeta donde esta )
+
+'from routers import products'
+
+y luego con un metodo de la instancia de fastapi lo traemos
+
+'app.include_router(products.router)'
+
+nota= moure dice que habitualmente los routers siempre tienen el mismo path
+
+ejm todas las operaciones de 'users' son '/user' pero nosotros tenemos '/users' y el dice que hasta para eso se haria una api aparte para los 'users' y otra para 'user'
+
+ahora otra funcionalidad seria esta
+
+router = APIRouter( prefix="/products" )
+
+con esto ya no tenemos que indicar el path en las operaciones pq ya esta predeterminado
+
+'@router.get("/")' ya no los ponemos
+
+'@router.get("/{id}")' y aqui tampoco y aun asi funciona
+
+tambien esta el 'reponse=' por si no funciona y asi tambien tenemos una respuesta predeterminada
+
+'router = APIRouter( prefix="/products",
+responses={404:{"message": "No encontrado"}} )'
+
+y por ultimo tenemos 'tags' que ya es para la documentacion y poner un prefijo a las funciones que pertencen a la api
+
+'router = APIRouter(tags=["products"])'

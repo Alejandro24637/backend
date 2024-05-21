@@ -1,0 +1,11 @@
+Recursos estaticos
+
+basicamente son imagene o documentos, y estos los podemos montar en nuestra api asi
+
+'from fastapi.staticfiles import StaticFiles'
+
+luego 
+
+'app.mount("/static", StaticFiles(directory="static),name= "static")'
+
+lo primero es el path, luego el directorio y por ultimo el nombre

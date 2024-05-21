@@ -1,0 +1,20 @@
+apuntes de la leccion Peticiones http
+
+
+operaciones get
+
+get = obtener datos
+post = crear datos
+put = actualizar datos
+delete = borrar datos
+
+Programa CRUD
+Create
+Read
+Update
+Delete
+
+Request Body :
+from pydantic import BaseModel
+
+(una modelo para una clase )
