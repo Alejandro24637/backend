@@ -15,7 +15,7 @@ router = APIRouter(prefix="/userdb",
 ### Operacion Get ( para ver datos ) ###
 
 
-@router.get("/",response_model= list[User])
+@router.get("/",response_model= list)
 async def users():
     return users_schema(db_client.users.find())
 
