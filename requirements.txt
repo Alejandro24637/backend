@@ -5,4 +5,4 @@ passlib==1.7.4
 bcrypt
 pymongo==4.7.0
 python-multipart==0.0.9
-
+pydantic==2.6.1
